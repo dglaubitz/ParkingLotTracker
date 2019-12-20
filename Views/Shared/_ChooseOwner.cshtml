@@ -1,0 +1,104 @@
+﻿@model ParkingLotTracker.Models.VehicleInfo
+
+@{
+    ViewBag.Title = "ChooseOwner";
+}
+<div class="form-group" id="ownerGroup">
+    <label style="margin-bottom:0px">Username</label><br />
+    @Html.TextBoxFor(m => m.VehicleOwner.Username, new { id = "txtBoxUsername", TabIndex = 10 })<br />
+
+    @if (@Model.VehicleOwner != null)
+    {
+        <input id="hiddenUsernameReadOnly" type="hidden" value="@Model.VehicleOwner.Username" name="test" />
+    }
+    else
+    {
+        <input id="hiddenUsernameReadOnly" type="hidden" value="" name="test" />
+    }
+    <table style="width: 200px;">
+        <tr>
+            <td>
+                <label style="margin-bottom:0px">Name</label>
+            </td>
+            <td id="ownerFullName">
+                @if (@Model.VehicleOwner != null)
+                {
+                    <div id="initName">@Model.VehicleOwner.FirstName @Model.VehicleOwner.LastName</div>
+                }
+                else
+                {
+                    <div id="initName"></div>
+                }
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label style="margin-bottom:0px">Phone #</label>
+            </td>
+            <td id="ownerPhone">
+                @if (@Model.VehicleOwner != null)
+                {
+                    <div id="initPhone">@Model.VehicleOwner.PhoneNumber</div>
+                }
+                else
+                {
+                    <div id="initPhone"></div>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label style="margin-bottom:0px">Apt-Unit #</label>
+            </td>
+            <td id="ownerAptUnit">
+                @if (@Model.VehicleOwner != null)
+                {
+                    <div id="initAptUnit">@Model.VehicleOwner.ApartmentNumber-@Model.VehicleOwner.UnitNumber</div>
+                }
+                else
+                {
+                    <div id="initAptUnit"></div>
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+<div>
+        <input type="button" value="Change Vehicle Owner" class="btn btn-primary" TabIndex ="11" onclick="changeOwner('@Model.RegistrationNumber')" />
+</div>
+<script type="text/javascript">
+    function changeOwner(registrationNumber)
+    {
+        var usernameReadOnly = document.getElementById('hiddenUsernameReadOnly').value;
+        var username = document.getElementById('txtBoxUsername').value;
+        var params = {
+            registrationNumber: registrationNumber,
+            username: username
+        };
+        $.ajax({
+            url: "/Home/ChangeOwner",
+            data: params,
+            cache: false,
+            type: "GET",
+            success: function (response) {
+                if (response.Username != null && response.Username != '') {
+                    document.getElementById('txtBoxUsername').value = username;
+                    document.getElementById('hiddenUsernameReadOnly').value = username;
+
+                    document.getElementById('initName').innerHTML = '';
+                    document.getElementById('initPhone').innerHTML = '';
+                    document.getElementById('initAptUnit').innerHTML = '';
+                    document.getElementById('ownerFullName').firstChild.nodeValue = response.FirstName + ' ' + response.LastName;
+                    document.getElementById('ownerPhone').firstChild.nodeValue = response.PhoneNumber;
+                    document.getElementById('ownerAptUnit').firstChild.nodeValue = response.ApartmentNumber + '-' + response.UnitNumber;
+                } else {
+                    document.getElementById('txtBoxUsername').value = usernameReadOnly;
+                }
+            },
+            error: function (reponse) {
+                alert('error : ' + reponse);
+            }
+        });
+    }
+</script>

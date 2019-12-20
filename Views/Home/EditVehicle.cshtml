@@ -1,0 +1,79 @@
+﻿@model ParkingLotTracker.Models.VehicleInfo
+
+@{
+    ViewBag.Title = "EditVehicle";
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<body id="editInfo">
+    <div class="row">
+        <h2 class="col-md-4">Edit Vehicle</h2>
+        <h2 class="col-md-4">@Html.ActionLink("Edit Owner", "EditOwner", "Home", new { @Model.VehicleOwner.Username }, null)</h2>
+    </div>
+    <br />
+    <br />
+
+    @using (Html.BeginForm("SaveVehicle", "Home", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label style="margin-bottom:0px">Color</label><br />
+                    @Html.TextBoxFor(m => m.Color)
+                </div>
+                <div class="form-group">
+                    <label style="margin-bottom:0px">Make</label><br />
+                    @Html.TextBoxFor(m => m.Make)
+                </div>
+                <div class="form-group">
+                    <label style="margin-bottom:0px">Model</label><br />
+                    @Html.TextBoxFor(m => m.Model)
+                </div>
+                <div class="form-group">
+                    <label style="margin-bottom:0px">License Plate #</label>
+                    <div>
+                        @Html.TextBoxFor(m => m.RegistrationNumber)
+                        <span style="color:red">@ViewBag.registrationError</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+
+               @Html.Partial("~/Views/Shared/_ChooseOwner.cshtml")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label style="margin-bottom:0px">Date Registered</label><br />
+                    <div>@Model.DateEnteredSystem</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6" style="margin-top:6px" align="center">
+                <input type="submit" value="Save All Changes" class="btn btn-primary" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                @Html.ActionLink("Vehicle list", "Index", "Home")
+            </div>
+            <div class="col-md-4">
+                @Html.ActionLink("Owner list", "OwnerList", "Home")
+            </div>
+        </div>
+
+
+        @Html.HiddenFor(m => m.VehicleOwner.FirstName)
+        @Html.HiddenFor(m => m.VehicleOwner.LastName)
+        @Html.HiddenFor(m => m.VehicleOwner.PhoneNumber)
+        @Html.HiddenFor(m => m.VehicleOwner.ApartmentNumber)
+        @Html.HiddenFor(m => m.VehicleOwner.UnitNumber)
+        @Html.HiddenFor(m => m.DateEnteredSystem)
+        @Html.HiddenFor(m => m.PlaceholderRegistrationNumber)
+        @Html.HiddenFor(m => m.VehicleOwner.PlaceholderUsername)
+    }
+</body>

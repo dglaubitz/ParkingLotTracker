@@ -1,0 +1,98 @@
+﻿@model ParkingLotTracker.Models.VehicleInfo
+
+@{
+    ViewBag.Title = "AddVehicle";
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<body id="addVehicle">
+    <div class="row">
+        <h2 class="col-md-4">Add Vehicle</h2>
+        @if (ViewBag.choosePartial == "add")
+        {
+            <h2 class="col-md-4">Add New Owner</h2>
+        }
+        else if (ViewBag.choosePartial == "choose")
+        {
+            <h2 class="col-md-4">Choose Owner</h2>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <h6 class="col-md-4" style="margin-bottom:17px">
+            @if (ViewBag.choosePartial == "add")
+            {
+                @Html.ActionLink("Choose Existing Owner", "AddVehicleInfoChooseOwner", "Home", new { TabIndex = 9 })
+            }
+            else if (ViewBag.choosePartial == "choose")
+            {
+                @Html.ActionLink("Add New Owner", "AddVehicleInfo", "Home", new { TabIndex = 9 })
+            }
+        </h6>
+    </div>
+    @using (Html.BeginForm("SubmitVehicleInsert", "Home", FormMethod.Post))
+    {
+        <div class="row">
+            @*f*@
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label style="margin-bottom:0px">Color</label><br />
+                    @Html.TextBoxFor(m => m.Color, new { TabIndex = 5 })
+                </div>
+                <div class="form-group">
+                    <label style="margin-bottom:0px">Make</label><br />
+                    @Html.TextBoxFor(m => m.Make, new { TabIndex = 6 } )
+                </div>
+                <div class="form-group">
+                    <label style="margin-bottom:0px">Model</label><br />
+                    @Html.TextBoxFor(m => m.Model, new { TabIndex = 7 } )
+                </div>
+                <div class="form-group">
+                    <label style="margin-bottom:0px">License Plate #</label>
+                    <div>
+                        @Html.TextBoxFor(m => m.RegistrationNumber, new { TabIndex = 8 } )
+                        <span style="color:red">@ViewBag.registrationError</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                @if (ViewBag.choosePartial == "add")
+                {
+                    @Html.Partial("~/Views/Shared/_AddNewOwner.cshtml");
+                }
+                else if (ViewBag.choosePartial == "choose")
+                {
+                    @Html.Partial("~/Views/Shared/_ChooseOwner.cshtml");
+                }
+            </div>
+        </div>
+
+        <br /><br /><br />
+        <div class="row">
+            <div class="col-md-6" style="margin-top:1px" align="center">
+                <input type="submit" value="Save All Changes" class="btn btn-primary" tabindex="16" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                @Html.ActionLink("Vehicle list", "Index", "Home", new { TabIndex = 17 })
+            </div>
+            <div class="col-md-4">
+                @Html.ActionLink("Owner list", "OwnerList", "Home", new { TabIndex = 18 })
+            </div>
+        </div>
+
+        @Html.HiddenFor(m => m.VehicleOwner.FirstName)
+        @Html.HiddenFor(m => m.VehicleOwner.LastName)
+        @Html.HiddenFor(m => m.VehicleOwner.PhoneNumber)
+        @Html.HiddenFor(m => m.VehicleOwner.ApartmentNumber)
+        @Html.HiddenFor(m => m.VehicleOwner.UnitNumber)
+        @Html.HiddenFor(m => m.DateEnteredSystem)
+        @Html.HiddenFor(m => m.PlaceholderRegistrationNumber)
+        @Html.HiddenFor(m => m.VehicleOwner.PlaceholderUsername)
+    }
+</body>
+

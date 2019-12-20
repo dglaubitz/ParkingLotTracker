@@ -1,0 +1,96 @@
+﻿@model List<ParkingLotTracker.Models.VehicleInfo>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>Vehicle Information List</h2>
+<br />
+
+@using (Html.BeginForm("Index", "Home"))
+{
+    <table style="width:40%">
+        <tr>
+            <td style="width:38%">
+                <label style="margin-bottom:0px">Search By Registration #</label>
+            </td>
+            <td>
+                <input type='text' name='registrationSearchString' />
+                <button type="submit" class="btn btn-primary" style="font-size: 14px; padding: 1px 8px" >GO!</button>
+            </td>
+        </tr>
+    </table>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:19%">
+                <a>Description</a>
+            </th>
+            <th style="width:9%">
+                <a>Plate #</a>
+            </th>
+            <th style="width:15%">
+                <a>Owner Name</a>
+            </th>
+            <th style="width:10%">
+                <a>Apt-Unit</a>
+            </th>
+            <th style="width:10%">
+                <a>Phone #</a>
+            </th>
+            <th style="width:10%">
+                <a>Username</a>
+            </th>
+            <th style="width:7%">
+                <a>Registered</a>
+            </th>
+            <th style="width:15%;text-align: center">
+                <a>Edit</a>
+            </th>
+            <th style="width:5%">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vehicle in Model)
+        {
+            <tr>
+                <td style="width:19%">
+                    @vehicle.Color - @vehicle.Make @vehicle.Model
+                </td>
+                <td style="width:9%">
+                    @vehicle.RegistrationNumber
+                </td>
+                <td style="width:15%">
+                    @vehicle.VehicleOwner.FirstName @vehicle.VehicleOwner.LastName
+                </td>
+                <td style="width:10%">
+                    @vehicle.VehicleOwner.ApartmentNumber-@vehicle.VehicleOwner.UnitNumber
+                </td>
+                <td style="width:10%">
+                    @vehicle.VehicleOwner.PhoneNumber
+                </td>
+                <td style="width:10%">
+                    @vehicle.VehicleOwner.Username
+                </td>
+                <td style="width:7%">
+                    @vehicle.DateEnteredSystem.ToString("MM/dd/yyyy")
+                </td>
+                <td style="width:15%; text-align: center">
+                    <a>@Html.ActionLink("Vehicle", "EditVehicle", "Home", new { @vehicle.RegistrationNumber }, null)</a> |
+                    <a>@Html.ActionLink("Owner", "EditOwner", "Home", new { @vehicle.VehicleOwner.Username }, null)</a>
+                </td>
+                <td style="width:5%">
+                    <a>@Html.ActionLink("Delete", "DeleteVehicle", "Home", new { @vehicle.RegistrationNumber }, null)</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function returnRegistrationNumber() {
+        return document.getElementById('searchString').value;
+    }
+</script>

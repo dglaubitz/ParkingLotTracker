@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Parking Lot Tracker</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Vehicle List", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", TabIndex = 1 })&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                    <li>@Html.ActionLink("Owner List", "OwnerList", "Home", new { area = "" }, new { @class = "navbar-brand", TabIndex = 2 })&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                    <li>@Html.ActionLink("Add Vehicle", "AddVehicleInfo", "Home", new { area = "" }, new { @class = "navbar-brand", TabIndex = 3 })&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                    <li>@Html.ActionLink("Add Owner", "AddOwner", "Home", new { area = "" }, new { @class = "navbar-brand", TabIndex = 4  })&nbsp;&nbsp;&nbsp;&nbsp;</li>                   
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Parking Lot Tracker</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

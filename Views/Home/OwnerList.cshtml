@@ -1,0 +1,70 @@
+﻿@model List<ParkingLotTracker.Models.Owner>
+@{
+    ViewBag.Title = "OwnerList";
+}
+
+<h2>Owner List</h2>
+<br />
+@using (Html.BeginForm("OwnerList", "Home"))
+{
+    <table style="width:40%">
+        <tr>
+            <td style="width:38%">
+                <label style="margin-bottom:0px">Search By Username</label>
+            </td>
+            <td>
+                <input type='text' name='usernameSearchString' />
+                <button type="submit" class="btn btn-primary" style="font-size: 14px; padding: 1px 8px">GO!</button>
+            </td>
+        </tr>
+    </table>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th style="width:25%">
+                <a>Name</a>
+            </th>
+            <th style="width:10%">
+                <a>Apt-Unit</a>
+            </th>
+            <th style="width:15%">
+                <a>Phone #</a>
+            </th>
+            <th style="width:20%">
+                <a>Username</a>
+            </th>
+            <th style="width:10%">
+                <a># of Vehicles</a>
+            </th>
+            <th style="width:20%">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var owner in Model)
+        {
+            <tr>
+                <td style="width:25%">
+                    @owner.FirstName @owner.LastName
+                </td>
+                <td style="width:10%">
+                    @owner.ApartmentNumber-@owner.UnitNumber
+                </td>
+                <td style="width:15%">
+                    @owner.PhoneNumber
+                </td>
+                <td style="width:20%">
+                    @owner.Username
+                </td>
+                <td style="width:10%">
+                    @owner.CarsOwned
+                </td>
+                <td style="width:20%; text-align: center">
+                    <a>@Html.ActionLink("Edit", "EditOwner", "Home", new { @owner.Username }, null)</a> |
+                    <a>@Html.ActionLink("Delete", "DeleteOwner", "Home", new { @owner.Username }, null)</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
