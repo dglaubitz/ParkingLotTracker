@@ -106,8 +106,7 @@ namespace ParkingLotTracker.Controllers
 
         // perform db action on button click in add owner menu
         public ActionResult SubmitOwnerInsert(Owner owner)
-        {
-  
+        {  
                 ViewBag.usernameError = null;
   
                 string newUsername = InitString(owner.Username, "ToLower");
@@ -129,21 +128,21 @@ namespace ParkingLotTracker.Controllers
             }
         }
 
-        // vehicle add menu with add owner partial view - can add new owner
+        // vehicle add menu with "add owner" partial view - can add new owner with new vehicle
         public ActionResult AddVehicleInfo(VehicleInfo vehicleInfo)
         {
             ViewBag.choosePartial = "add";
             return View("AddVehicleInfo", vehicleInfo);
         }
 
-        // vehicle add menu with change owner partial view - can change existing owner
+        // vehicle add menu with "change owner" partial view - can add vehicle with an existing owner
         public ActionResult AddVehicleInfoChooseOwner(VehicleInfo vehicleInfo)
         {
             ViewBag.choosePartial = "choose";
             return View("AddVehicleInfo", vehicleInfo);
         }
 
-        // perform db action on button click in add vehicle menu
+        // perform db action on button click in "add vehicle" menu
         public ActionResult SubmitVehicleInsert(VehicleInfo vehicleInfo)
         {
             if (vehicleInfo.VehicleOwner.PlaceholderUsername == ConfigurationManager.AppSettings["ownerAddMode"])
@@ -203,7 +202,7 @@ namespace ParkingLotTracker.Controllers
             }
         }
 
-        // owner add menu - stand alone, not partial view attached to add vehicle
+        // owner add menu - stand alone; no partial view attached to "add vehicle" view
         public ActionResult AddOwnerInfo(Owner owner)
         {
             return View(owner);
@@ -266,7 +265,7 @@ namespace ParkingLotTracker.Controllers
             return false;
         }
 
-        // return true if vehicle has entered registration # (can't add a vehicle if registration already exists)
+        // return true if user-entered registration # already exists (can't add a vehicle if registration already exists)
         public bool RegistrationIsTaken(VehicleInfo vehicleInfo, string newField, string oldField)
         {
             if (newField != oldField && VehicleInfo.VehicleRegistrationExists(newField))
