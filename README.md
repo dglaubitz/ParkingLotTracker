@@ -1,4 +1,4 @@
-# PartkingLotTracker
+# ParkingLotTracker
 An apartment manager needs a simple software to track vehicles that park at their apartment complex...
 
 
