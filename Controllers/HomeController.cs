@@ -229,9 +229,9 @@ namespace ParkingLotTracker.Controllers
             if (tString != null)
             {
                 if (mods == "ToUpper")
-                    return (tString.ToUpper());
+                    return (tString.ToUpper().Trim());
                 else if (mods == "ToLower")
-                    return (tString.ToLower());
+                    return (tString.ToLower().Trim());
                 return (tString.Trim());
             }
             return tString;
