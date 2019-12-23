@@ -53,7 +53,6 @@ namespace ParkingLotTracker.Models
                 {
                     stringProperty.SetValue(vehicleInfo, "", null);
                 }
-
             }
 
             string query = string.Format(
@@ -196,7 +195,7 @@ namespace ParkingLotTracker.Models
             return true;
         }
 
-          // adds vehicle (must have a username for owner)
+        // adds vehicle (must have a username for owner)
         public static bool Add(VehicleInfo vehicle)
         {
             if (VehicleRegistrationExists(vehicle.RegistrationNumber))
@@ -204,7 +203,8 @@ namespace ParkingLotTracker.Models
                 return false;
             }
 
-           var stringProperties = vehicle.GetType().GetProperties()
+			// checking for null values and keeping them trim
+            var stringProperties = vehicle.GetType().GetProperties()
                           .Where(p => p.PropertyType == typeof(string));
 
             foreach (var stringProperty in stringProperties)
